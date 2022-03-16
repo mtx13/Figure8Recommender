@@ -43,9 +43,11 @@ The following libraries were installed as part of this project:
 
 ## Execution <a name = "execution"></a>
 **-Merge and Load data**
+
 python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
 
 **-Process/Prepare Data and Train model**
+
 python train_classifier.py ../data/DisasterResponse.db classifier.pkl
 
 ## Project Results <a name="results"></a>
