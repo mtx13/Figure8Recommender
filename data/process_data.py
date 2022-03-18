@@ -1,3 +1,6 @@
+# import libraries
+import numpy as np
+import pandas as pd
 import sys
 
 
@@ -26,14 +29,16 @@ def clean_data(df):
 	for column in categories:
 		# set each value to be the last character of the string
 		categories[column] = categories[column].str[-1]
-    		# convert column from string to numeric
+		# convert column from string to numeric    
 		categories[column] = (categories[column]).astype(int)
+    		#Drop invalid values - values greater than 1 are not valid.
+		categories.drop(categories.index[categories[column].astype(int) > 1 ], inplace=True)
 	
-	# drop the original categories column from `df`
-	df.drop(['categories'] ,axis=1,inplace=True)
+	# drop the original categories column & id from `df` 
+	df.drop(['categories','id'] ,axis=1,inplace=True)
 
-	# concatenate the original dataframe with the new `categories` dataframe
-	df = pd.concat([df,categories],axis=1)
+	# concatenate the original dataframe with the new `categories` dataframe using inner join.
+	df = pd.concat([df,categories],axis=1,join='inner')
 
 	# drop duplicates
 	df = df.drop_duplicates()
@@ -42,8 +47,17 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
-	from sqlalchemy import create_engine
-	df.to_sql('InsertTableName', engine, index=False , if_exists='replace')
+	import sqlite3
+	# connect to the database
+
+	conn = sqlite3.connect('DisasterResponse.db')
+	conn.execute("DROP TABLE IF EXISTS merged")
+
+	# TODO: output the df_merged dataframe to a SQL table called 'merged'.
+	df.to_sql('merged',con=conn, schema='DisasterResponse.db' ,if_exists='replace')
+
+	conn.close()
+
 	pass  
 
 
