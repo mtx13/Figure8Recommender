@@ -82,11 +82,11 @@ http://127.0.0.1:3001/
 
 Because this is largely an acedemic exercise there is plenty of room to improve the accuracy of the model. 
 
-disaster_messages.csv contains the unique id, messages and genre.  disaster_categories.csv contains the unique id and multiple strings indicating which category is associated with the message. The category strings were converted to binary values. Rows that could not be converted to binary were removed. The data was then joined to the messages.csv via the unique id and finally loaded to the SQL databvase. This was conducted using process_data.py
+Each of the .csv file were read into a dataframe. *disaster_messages.csv* contains the unique id, messages and genre.  *disaster_categories.csv* contains the unique id and multiple strings indicating which category is associated with the message. The category strings were converted to binary values. Rows that could not be converted to binary were removed. The data was then joined to the messages dataframe via the unique id and finally loaded to the SQL database. This can be executed using *process_data.py*
 
-The message data was cleaned by converting to lower case, removing special characters and stop words, lemmatizing the data. Several predictive algorithms were tested including CatBoost, Random Forest and XGboost. Multiple grid searches were performed with each. XGBoost had the best performance time and accuracy and was selected for the final model. Only the XGBoost model is included. This was performance in the train_classifier.py
+Before predicting categories, the data was downloaded from the SQL database. Then the message data was cleaned by converting to lower case, removing special characters and stop words, lemmatizing the data. Data was vectorized for processing. Several predictive algorithms were tested including CatBoost, Random Forest and XGboost. Multiple grid searches were performed with each using a pipeline. XGBoost had the best performance time and accuracy and was selected for the final model. Only the XGBoost model is included. This can be executed using the *train_classifier.py*
 
-The web app was modified from the base page provided by Udacity. Code to highlight the predicted categories was added and a new graph was created which provides. run.py will launch the web app. 
+The web app was modified from the base page provided by Udacity. The interface allows a user to type a text message.  The code then highlights the predicted categories & agencies to notify. A new graph was created which provides.... *run.py* will launch the web app. 
 
 
 ## Licensing, Authors, and Acknowledgements <a name="licensing"></a>
