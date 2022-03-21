@@ -7,7 +7,7 @@ Recommender Engine using Figure Eight Disaster Recovery data
 2. [Project Motivation](#motivation)
 3. [File Descriptions](#files)
 4. [Execution](#execution)
-5. [Results](#results)
+5. [Methodology](#results)
 6. [Licensing, Authors, and Acknowledgements](#licensing)
 
 ## Installation <a name="installation"></a>
@@ -19,6 +19,7 @@ The following libraries were installed as part of this project:
 - train_classifier.py 
   - NLTK tokenize (word_tokenize, punkt) , wordnet (WordNetLemmatizer) , stopwords 
   - XGBClassifier  
+  - TfidfVectorizer
   - MultiOutputClassifier
   - GridSearchCV
   - make_pipeline
@@ -37,15 +38,12 @@ The following libraries were installed as part of this project:
         
 ## Project Motivation <a name="motivation"></a>
   This project was built as part of the Udacity Data Science nanodegree.
-  The objective is to load disaster call messages and build a recommender engine to correctly categorize each message based on the 36 categories provided by FigureEight.
-  The output is a website that can be used to enter a new disaster message and see which categories it would be assigned to.  Graphs are also generated showing the distribution of ..... 
+  
+  The objective is to merge and load actual disaster messages provided by Figure Eight Inc. to a database. The next step is to build a recommender engine to correctly categorize each message based on the 36 categories provided by FigureEight. The web app developed as part of othe project can be used to enter new messages and see which agencies should be notified of the disaster.  The web app also graphs some of the data using Plotly.
+  
+  Details to run python scripts and load the web page can be found in the [Execution](#execution) section. 
   
   
-  
-  ....
-  TBC
-
-
 ## File Descriptions <a name="files"></a>
 **-Data ETL Pipeline**
  - data/process_data.py -- this script will merge the category & message files list below and load to the SQLite database.
@@ -58,37 +56,41 @@ The following libraries were installed as part of this project:
 
 
 **-Web IDE**
- - app/run.py -- this script is used to generate the graphs and input text for the model
- 
+ - app/run.py -- Flask script to run the web app
+ - app/templates/master.html  # main page of web app
+ - /app/templates/go.html  # classification result page of web app
 
 ## Execution <a name = "execution"></a>
 **-Merge and Load data:**
 
-python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
+python ./data/process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
 
 **-Process/Prepare Data and Train model:**
 
-python train_classifier.py ../data/DisasterResponse.db classifier.pkl
+python ./models/train_classifier.py ../data/DisasterResponse.db classifier.pkl
 
-**-Lauch website:**
+**-Launch website:**
 
-python run.py
+python ./app/run.py
 
 **-Web page can be accessed on local system at:**
 
 http://127.0.0.1:3001/
 
 
-## Project Results <a name="results"></a>
+## Project Methodology <a name="results"></a>
 
-Because this is largely an acedemic exercise there is plenty of room to improve the accuracy of the model.  Several algorithms were tried including CatBoost, SVC and XGboost.  XGBoost had the best performance time and was used for the final model. 
+Because this is largely an acedemic exercise there is plenty of room to improve the accuracy of the model. 
 
+disaster_messages.csv contains the unique id, messages and genre.  disaster_categories.csv contains the unique id and multiple strings indicating which category is associated with the message. The category strings were converted to binary values. Rows that could not be converted to binary were removed. The data was then joined to the messages.csv via the unique id and finally loaded to the SQL databvase. This was conducted using process_data.py
 
+The message data was cleaned by converting to lower case, removing special characters and stop words, lemmatizing the data. Several predictive algorithms were tested including CatBoost, Random Forest and XGboost. Multiple grid searches were performed with each. XGBoost had the best performance time and accuracy and was selected for the final model. Only the XGBoost model is included. This was performance in the train_classifier.py
 
+The web app was modified from the base page provided by Udacity. Code to highlight the predicted categories was added and a new graph was created which provides. run.py will launch the web app. 
 
 
 ## Licensing, Authors, and Acknowledgements <a name="licensing"></a>
-All data was provide by Figure Eight via Udacity.
+All data was provide by Figure Eight via Udacity.  Based templates were also provided by Udacity. 
 
 Other acknowledgements of code leveraged via Stackoverflow are documented within the code itself. 
 
