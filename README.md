@@ -90,8 +90,12 @@ The web app was modified from the base page provided by Udacity. The interface a
 
 
 ## Licensing, Authors, and Acknowledgements <a name="licensing"></a>
-All data was provide by Figure Eight via Udacity.  Based templates were also provided by Udacity. 
+All data was provide by Figure Eight via Udacity. 
 
 Other acknowledgements of code leveraged via Stackoverflow are documented within the code itself. 
+
+Plotly stacked bar graph was created using guidance from TowardsDataScience articles:
+
+https://towardsdatascience.com/step-by-step-bar-charts-using-plotly-express-bb13a1264a8b
 
 
