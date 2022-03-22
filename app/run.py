@@ -8,6 +8,7 @@ from nltk.tokenize import word_tokenize
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
+
 #from sklearn.externals import joblib
 import joblib
 from sqlalchemy import create_engine
@@ -38,34 +39,86 @@ model = joblib.load("../models/classifier.pkl")
 @app.route('/')
 @app.route('/index')
 def index():
-    
+    #https://pbpython.com/plotly-dash-intro.html
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
-    genre_counts = df.groupby('genre').count()['message']
-    genre_names = list(genre_counts.index)
+
+    category_counts = df.drop(['message','original','genre','index'], axis=1).sum()	
+    category_columns = list(category_counts.index)
+
+
+    pivot = df.drop(['message','original'], axis=1).groupby(['genre']).sum().reset_index()
+    cat1 = Bar(x=pivot['genre'], y=pivot[('related')], name='Related')
+    cat2 = Bar(x=pivot['genre'], y=pivot[('request')], name='Request')
+    cat3 = Bar(x=pivot['genre'], y=pivot[('offer')], name='Offer')
+    cat4 = Bar(x=pivot['genre'], y=pivot[('aid_related')], name='Aid Related')
+    cat5 = Bar(x=pivot['genre'], y=pivot[('medical_help')], name='Medical Help')
+
     
+   
+
+   
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
         {
             'data': [
                 Bar(
-                    x=genre_names,
-                    y=genre_counts
+		    x = category_columns,
+		    y = category_counts
+
+
+
 		    
                 )
             ],
 
             'layout': {
-                'title': 'Distribution of Message Genres',
+                'title': 'Distribution of Category Messages',
+          	'template' : 'plotly_dark',
+		
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Categories"
+                },
+		
+		    
+
+
+            }
+        },
+{
+          
+   	   'data': [
+		
+		cat1, cat2, cat3, cat4, cat5
+	    
+            ],
+
+            'layout': {
+                'title': 'Distribution of Category Messages by Genre',
+          	'template' : 'plotly_dark',
+		
                 'yaxis': {
                     'title': "Count"
                 },
                 'xaxis': {
                     'title': "Genre"
-                }
+                },
+		'barmode' : 'group'
+
+
+
             }
         }
+
+
+
+
+
+
     ]
 
     # encode plotly graphs in JSON
