@@ -32,7 +32,7 @@ The following libraries were installed as part of this project:
   -  NLTK WordNetLemmatizer , word_tokenize
   -  Flask
   -  Plotly
-  -  Sqlalchemy
+  -  SQLAlchemy
 
 
         
@@ -84,9 +84,9 @@ Because this is largely an acedemic exercise there is plenty of room to improve 
 
 The two csv files were merged into a single dataframe.  *disaster_messages.csv* contains the unique id, messages and genre.  *disaster_categories.csv* contains the unique id and multiple strings indicating which category is associated with the message. The category strings were converted to binary values in a new dataframe. Rows that could not be converted to binary were removed. The data was then joined to the messages dataframe via the unique id and finally loaded to the SQL database. This can be executed using *process_data.py*
 
-Before training data for categories, the data was downloaded from the SQL database. Messages were cleaned by removing stop words, puncuation, normalizing text (lower case). Data was also tokenized. A pipeline was created to apply the tokenizer, grid search hyperparameters and build optimized model. Several predictive algorithms were tested including CatBoost, Random Forest and XGboost. Multiple grid searches were performed with each. XGBoost had the best performance time and accuracy and was selected for the final model. Only the XGBoost model is included. This can be executed using the *train_classifier.py*
+Before training data for categories, the data was downloaded from the SQL database. Messages were cleaned by removing stop words, puncuation, normalizing text (lower case). Data was also tokenized. A pipeline was created to apply the tokenizer, grid search hyperparameters and build optimized model. Several predictive algorithms were tested including CatBoost, Random Forest and XGBoost. Multiple grid searches were performed with each. XGBoost had the best performance time and accuracy and was selected for the final model. Only the XGBoost model is included. This can be executed using the *train_classifier.py*
 
-The web app was modified from the base page provided by Udacity. The interface allows a user to type a text message.  The code then highlights the predicted categories & agencies to notify. Two graph were created which provides.... *run.py* will launch the web app. 
+The web app was modified from the base page provided by Udacity. The interface allows a user to type a text message.  The code then highlights the predicted categories & agencies to notify. Two bar graph were created which display the distribution of messages by category & the 'stacked' category by genre graphs.  *run.py* will launch the web app. 
 
 
 ## Licensing, Authors, and Acknowledgements <a name="licensing"></a>
