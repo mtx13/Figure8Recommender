@@ -39,7 +39,7 @@ The following libraries were installed as part of this project:
 ## Project Motivation <a name="motivation"></a>
   This project was built as part of the Udacity Data Science nanodegree.
   
-  The objective is to merge and load actual disaster messages provided by Figure Eight Inc. to a database. The next step is to build a recommender engine to correctly categorize each message based on the 36 categories provided by FigureEight. The web app developed as part of othe project can be used to enter new messages and see which agencies should be notified of the disaster.  The web app also graphs some of the data using Plotly.
+  The objective is to merge and load actual disaster messages provided by Figure Eight Inc. to a database. The next step is to build a recommender engine to correctly categorize each message based on the 36 categories provided by FigureEight. The web app developed as part of of this project allows the user to enter new messages and see which agencies should be notified of the disaster.  The web app also graphs the category & genre detail of the stored data using Plotly.
   
   Details to run python scripts and load the web page can be found in the [Execution](#execution) section. 
   
@@ -82,11 +82,11 @@ http://127.0.0.1:3001/
 
 Because this is largely an acedemic exercise there is plenty of room to improve the accuracy of the model. 
 
-The two csv files were merged into a single dataframe.  *disaster_messages.csv* contains the unique id, messages and genre.  *disaster_categories.csv* contains the unique id and multiple strings indicating which category is associated with the message. The category strings were converted to binary values in a new dataframe. Rows that could not be converted to binary were removed. The data was then joined to the messages dataframe via the unique id and finally loaded to the SQL database. This can be executed using *process_data.py*
+The two csv files were merged into a single dataframe.  *disaster_messages.csv* contains the unique id, messages and genre.  *disaster_categories.csv* contains the unique id and 36 columns indicating which categories were associated with the message. The category strings were converted to binary values in a new dataframe. Rows that could not be converted to binary were removed. The data was then joined to the messages dataframe via the unique id and finally loaded to the SQL database. This can be executed using *process_data.py*
 
-Before training data for categories, the data was downloaded from the SQL database. Messages were cleaned by removing stop words, puncuation, normalizing text (lower case). Data was also tokenized. A pipeline was created to apply the tokenizer, grid search hyperparameters and build optimized model. Several predictive algorithms were tested including CatBoost, Random Forest and XGBoost. Multiple grid searches were performed with each. XGBoost had the best performance time and accuracy and was selected for the final model. Only the XGBoost model is included. This can be executed using the *train_classifier.py*
+Before training data for categories, the data was downloaded from the SQL database. Messages were cleaned by removing stop words, puncuation, normalizing text (lower case). Data was also tokenized. A pipeline was created to apply the tokenizer, grid search hyperparameters and build optimized model. Several predictive algorithms were tested including CatBoost, Random Forest and XGBoost. Multiple grid searches were performed with each. XGBoost had the best performance time and accuracy and was selected for the final model. Only the XGBoost model is included in this repository. The cleansing and training can be executed using the *train_classifier.py*
 
-The web app was modified from the base page provided by Udacity. The interface allows a user to type a text message.  The code then highlights the predicted categories & agencies to notify. Two bar graph were created which display the distribution of messages by category & the 'stacked' category by genre graphs.  *run.py* will launch the web app. 
+The web app was modified from the base page provided by Udacity. The interface allows a user to type a text message.  The code then highlights the predicted categories & agencies to notify. Two bar graph were created which display the distribution of messages by category & the 'stacked' category by genre graphs.  *run.py* will launch the web app. Then access the app via http://localhost:3001/
 
 
 ## Licensing, Authors, and Acknowledgements <a name="licensing"></a>
