@@ -1,5 +1,5 @@
 # Figure8Recommender
-Recommender Engine using Figure Eight Disaster Recovery data
+Recommender Engine using Figure Eight Disaster Recovery data.  
 
 ### Table of Contents
 
@@ -98,4 +98,4 @@ Plotly stacked bar graph was created using guidance from TowardsDataScience arti
 
 https://towardsdatascience.com/step-by-step-bar-charts-using-plotly-express-bb13a1264a8b
 
-
+Figure Eight was acquired by [appen](https://appen.com/) in 2019.
