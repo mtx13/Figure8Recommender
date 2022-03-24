@@ -5,6 +5,10 @@ import sys
 
 
 def load_data(messages_filepath, categories_filepath):
+	'''
+	Load csv files and merge into a single dataframe.
+	'''
+
 	#Read files 
 	file1 = pd.read_csv(messages_filepath)
 	file2 = pd.read_csv(categories_filepath)
@@ -14,11 +18,16 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+	
+	'''
+	Clean data before loading to database.
+	'''	
 
 	# create a dataframe of the 36 individual category columns
 	categories = pd.Series(df['categories']).str.split(";", expand=True)
 	
-	# select the first row of the categories dataframe and remove last 2 char on each row
+	# select the first row of the categories dataframe and remove last 2 char on each row which
+	# are not part of the clean category name
 	row = categories.iloc[0]
 	category_colnames =  row.apply( lambda x: (x[:-2]))
 	
@@ -26,6 +35,7 @@ def clean_data(df):
 	categories.columns = category_colnames
 
 	#Iterate through the category columns in df to keep only the last character of each string 
+	#which is a binary indicator. Drop rows which cannot be converted to 0 or 1.
 	for column in categories:
 		# set each value to be the last character of the string
 		categories[column] = categories[column].str[-1]
@@ -47,14 +57,18 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+	'''
+	Save cleaned data to teh SQLite database in the 'merged' table.
+
+	'''
 	import sqlite3
 	# connect to the database
 
-	conn = sqlite3.connect('DisasterResponse.db')
+	conn = sqlite3.connect(database_filename)
 	conn.execute("DROP TABLE IF EXISTS merged")
 
 	# TODO: output the df_merged dataframe to a SQL table called 'merged'.
-	df.to_sql('merged',con=conn, schema='DisasterResponse.db' ,if_exists='replace')
+	df.to_sql('merged',con=conn, schema=database_filename ,if_exists='replace')
 
 	conn.close()
 
