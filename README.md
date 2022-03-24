@@ -62,16 +62,19 @@ Details to run python scripts and load the web page can be found in the [Executi
 
 ## Execution <a name = "execution"></a>
 **-Merge and Load data:**
+From the project home directory run:
 
-python ./data/process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
+python ./data/process_data.py ./data/disaster_messages.csv ./data/disaster_categories.csv DisasterResponse.db
 
 **-Process/Prepare Data and Train model:**
+From the project home directory run:
 
-python ./models/train_classifier.py ../data/DisasterResponse.db classifier.pkl
+python ./models/train_classifier.py ./data/DisasterResponse.db ./models/classifier.pkl
 
 **-Launch website:**
+From the project's app directory run:
 
-python ./app/run.py
+python run.py
 
 **-Web page can be accessed on local system at:**
 
