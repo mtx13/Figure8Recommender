@@ -17,6 +17,10 @@ from sqlalchemy import create_engine
 app = Flask(__name__)
 
 def tokenize(text):
+    '''
+    Tokenize text in prepartion for the model.
+
+    '''
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -40,7 +44,9 @@ model = joblib.load("../models/classifier.pkl")
 @app.route('/index')
 def index():
 
-    # extract data needed for visuals
+    '''
+    Extract data needed for visuals.
+    '''
 
 
     category_counts = df.drop(['message','original','genre','index'], axis=1).sum()	
