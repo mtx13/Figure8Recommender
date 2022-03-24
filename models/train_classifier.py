@@ -23,7 +23,8 @@ nltk.download('stopwords')
 
 
 def load_data(database_filepath):
-	
+	#load data from the SQLite database into a dataframe
+	#create X & y values for prediction
 	conn = sqlite3.connect(database_filepath)
 
 	df = pd.read_sql("SELECT * FROM merged" , con = conn)
@@ -40,7 +41,7 @@ def load_data(database_filepath):
 
 def tokenize(text):
 	'''
-	Process data to remove stop works, puncuation, normalize text (lower case) & tokenize data
+	Process data to remove stop words, puncuation, normalize text (lower case) & tokenize data
 	Return the cleaned texted
 	'''
 	lemmatizer = WordNetLemmatizer()
@@ -78,14 +79,14 @@ def build_model():
         ])),
 
         
-        ('clf', MultiOutputClassifier(XGBClassifier(eval_metric='rmse',use_label_encoder=False)))
+        ('clf', MultiOutputClassifier(XGBClassifier(use_label_encoder=False)))
     ])
 
     parameters = {
         
         'clf__estimator__learning_rate' : [ 0.001, 0.01, 0.1 ],
-        #'clf__estimator__max_depth' : [  3 , 4 , 5 ] , 
-        'clf__estimator__n_estimators' : [ 10, 25, 50]
+        'clf__estimator__n_estimators' : [ 10, 25],
+	'clf__estimator__eval_metric' : ['logloss','rmse']
         
                 
     }
@@ -95,7 +96,7 @@ def build_model():
 
 
 def evaluate_model(model, X_test, y_test, category_names):
-    	#Display f1, precision and accuracy for each category. 
+    	#Display f1, precision and accuracy for each category prediction. 
     	from sklearn.metrics import multilabel_confusion_matrix
 
     	y_pred = model.predict(X_test)
