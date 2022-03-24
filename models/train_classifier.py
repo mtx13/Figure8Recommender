@@ -23,14 +23,18 @@ nltk.download('stopwords')
 
 
 def load_data(database_filepath):
-	#load data from the SQLite database into a dataframe
-	#create X & y values for prediction
+	'''
+	Load data from the SQLite database into a dataframe.
+
+	Create X & y values for prediction.
+	'''
+
 	conn = sqlite3.connect(database_filepath)
 
 	df = pd.read_sql("SELECT * FROM merged" , con = conn)
 
 	conn.close()
-	#df = df.head(100)
+	#df = df.head(1000)
 
 	X =  df['message']
 	y = df.drop(['index','message','original','genre'], axis=1)
@@ -41,8 +45,9 @@ def load_data(database_filepath):
 
 def tokenize(text):
 	'''
-	Process data to remove stop words, puncuation, normalize text (lower case) & tokenize data
-	Return the cleaned texted
+	Process data to remove stop words, puncuation, normalize text (lower case) & tokenize data.
+
+	Return the cleaned texted.
 	'''
 	lemmatizer = WordNetLemmatizer()
 	stop_words = stopwords.words("english")
@@ -64,9 +69,10 @@ def tokenize(text):
 
 
 def build_model():
-   #Pipeline to apply tokenizer, transform data, grid search hyperparameters and build optimized model
-   #https://classroom.udacity.com/nanodegrees/nd025/parts/059c574b-e0d0-4fa7-8acd-47d9df9d53b6/modules/b0daab3f-5ffc-4ce1-af45-0945e87321ad/lessons/cc5cc5cf-8406-4ad8-a8ae-550289da572c/concepts/901843a0-9eba-4685-8a11-b54b567db8f5
-   
+    '''
+    Pipeline to apply tokenizer, transform data, grid search hyperparameters and build optimized model.
+    
+    '''  
     pipeline = Pipeline([
         ('features', FeatureUnion([
 
@@ -90,13 +96,15 @@ def build_model():
         
                 
     }
-    cv = GridSearchCV(pipeline, param_grid=parameters)
+    cv = GridSearchCV(pipeline, param_grid=parameters, verbose = 3)
 
     return cv
 
 
 def evaluate_model(model, X_test, y_test, category_names):
-    	#Display f1, precision and accuracy for each category prediction. 
+    	'''
+	Display f1, precision and accuracy for each category prediction. 
+	'''
     	from sklearn.metrics import multilabel_confusion_matrix
 
     	y_pred = model.predict(X_test)
@@ -108,11 +116,12 @@ def evaluate_model(model, X_test, y_test, category_names):
 
 
 def save_model(model, model_filepath):
-	#save the model to a local working directory
+	'''
+	Save the model to a local working directory.
     
-	#Example used to export to pickle found:
-	#https://ianlondon.github.io/blog/pickling-basics/
-    
+	Example used to export to pickle found:
+	https://ianlondon.github.io/blog/pickling-basics/
+	'''
 
 	import pickle
 	# open a file, where you ant to store the model
