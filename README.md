@@ -52,13 +52,13 @@ Details to run python scripts and load the web page can be found in the [Executi
  
 **-ML Pipeline**
 - models/train_classifier.py -- this script will retrieve data from the database; tokenize/normalize the text data; optimize and fit the data using XGBoost algorithm. 
-- classifier.pkl -- pickle file generated to store the XGBoost model
+- models/classifier.pkl -- pickle file generated to store the XGBoost model
 
 
 **-Web IDE**
  - app/run.py -- Flask script to run the web app
  - app/templates/master.html  # main page of web app
- - /app/templates/go.html  # classification result page of web app
+ - app/templates/go.html  # classification result page of web app
 
 ## Execution <a name = "execution"></a>
 **-Merge and Load data:**
