@@ -39,13 +39,15 @@ model = joblib.load("../models/classifier.pkl")
 @app.route('/')
 @app.route('/index')
 def index():
-    #https://pbpython.com/plotly-dash-intro.html
+
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
+
 
     category_counts = df.drop(['message','original','genre','index'], axis=1).sum()	
     category_columns = list(category_counts.index)
 
+    #Method to create stacked/side-by-side graph provided by TowardsDataScience.com
+    #https://towardsdatascience.com/step-by-step-bar-charts-using-plotly-express-bb13a1264a8b
 
     pivot = df.drop(['message','original'], axis=1).groupby(['genre']).sum().reset_index()
     cat1 = Bar(x=pivot['genre'], y=pivot[('related')], name='Related')
@@ -54,12 +56,10 @@ def index():
     cat4 = Bar(x=pivot['genre'], y=pivot[('aid_related')], name='Aid Related')
     cat5 = Bar(x=pivot['genre'], y=pivot[('medical_help')], name='Medical Help')
 
-    
-   
 
    
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
+    #Create a bar graph with the count of messages by category.
     graphs = [
         {
             'data': [
@@ -90,7 +90,7 @@ def index():
             }
         },
 {
-          
+           #Create a side-by-side bar graph showing the count of messages by category and genre.
    	   'data': [
 		
 		cat1, cat2, cat3, cat4, cat5
