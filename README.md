@@ -72,7 +72,7 @@ From the project home directory run:
 python ./models/train_classifier.py ./data/DisasterResponse.db ./models/classifier.pkl
 
 **-Launch website:**
-From the project's app directory run:
+From the project 'app' directory run:
 
 python run.py
 
