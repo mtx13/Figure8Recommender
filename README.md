@@ -1,5 +1,4 @@
-# Figure8Recommender
-Recommender Engine using Figure Eight Disaster Recovery data.  
+# Figure Eight Recommender Engine
 
 ### Table of Contents
 
@@ -37,13 +36,14 @@ The following libraries were installed as part of this project:
 
         
 ## Project Motivation <a name="motivation"></a>
-  This project was built as part of the Udacity Data Science nanodegree.
   
-  The objective is to merge and load actual disaster messages provided by Figure Eight Inc. to a database. The next step is to build a recommender engine to correctly categorize each message based on the 36 categories provided by FigureEight. The web app developed as part of of this project allows the user to enter new messages and see which agencies should be notified of the disaster.  The web app also graphs the category & genre detail of the stored data using Plotly.
+This project focuses on building a recommender engine to process incoming emergency messages using Figure Eight Disaster Recovery data. The data contains over 26K messages (before cleaning) and each is associated with one or more of the 36 categories provided by Figure Eight. The categories determine which disaster recovery team(s) should receive the message. Using the data provided, a model is trained to predict who should receive new incoming messages. A web app was created and allows someone to enter a message as see where the message would be routed. It does not attempt to route the messages. Graphs also show a high level summary of the message log.
+
+This was created as part of the Udacity Data Science nanodegree. Because it is largely academic and focused on NLP and building a pipeline for the engine, there is definitely room for improvement - especially in the accuracy of the model! 
   
-  Details to run python scripts and load the web page can be found in the [Execution](#execution) section. 
-  
-  
+Details to run python scripts and load the web page can be found in the [Execution](#execution) section. 
+
+ 
 ## File Descriptions <a name="files"></a>
 **-Data ETL Pipeline**
  - data/process_data.py -- this script will merge the category & message files list below and load to the SQLite database.
